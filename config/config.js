@@ -1,7 +1,11 @@
-require('dotenv').config();
+require('dotenv').config({path: '.env.local'});
 
 const dbConfig = {
-    dbConnStr: process.env.db_conn_str
+    dbConnStr: process.env.dbConnStr
 }
 
-module.exports = dbConfig;
+const serverPort = process.env.serverPort
+
+console.log(dbConfig, serverPort)
+
+module.exports = {dbConfig, serverPort};
