@@ -1,7 +1,7 @@
 const express = require('express');
 const {dbConfig, serverPort} = require('./config/config');
 const mongoose = require('mongoose');
-const userRoutes = require('./middleware/userRoutes')
+const userRoutes = require('./routes/userRoutes')
 const cors = require('cors');
 
 
