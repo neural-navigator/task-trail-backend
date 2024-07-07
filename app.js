@@ -17,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/v1', userRoutes);
 
+
 app.listen(serverPort, ()=>{
     console.log(`server is running on ${serverPort}`);
 })
