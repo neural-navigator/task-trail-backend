@@ -10,6 +10,11 @@ const TaskSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+        required: true,
+        enum: ["draft", "published"]
+    },
     token: {
         type: Number,
         required: true
@@ -20,7 +25,7 @@ const TaskSchema = mongoose.Schema({
     },
     rewardAmount: {
         type: Number,
-        required: true
+        required: false
     },
     numGigs: {
         type: Number,
