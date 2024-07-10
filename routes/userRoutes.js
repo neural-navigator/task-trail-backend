@@ -7,6 +7,6 @@ const authenticate = require('../middleware/jwtValidator')
 router.post('/create-user', userController.createUser);
 router.post('/verify-user', userController.verifyUser);
 router.post('/create-task', authenticate, taskController.createTask)
-router.get('/get-task', authenticate, taskController.getTasks)
+router.post('/get-task', authenticate, taskController.getTask)
 
 module.exports = router;
