@@ -42,6 +42,36 @@ const verifyUser = async(req, res) => {
     }
 }
 
+const getUserData = async(req, res) => {
+    const userId = req.userId;
+    try {
+        const userProfile = await User.findOne({_id: userId});
+        if(!userProfile) {
+            res.status(404).json({message: "User not found!"})
+        } else {
+            res.status(200).json({userProfile})
+        } 
+    } catch(error) {
+        res.status(502).json({"message": `server Error:: ${error}`, userProfile: {}})
+    }
+}
+
+const changeUserProfile = async(req, res) => {
+    const userId = req.userId;
+    try {
+        const existingProfile = await User.findOne({_id: userId});
+        if(!existingProfile) {
+            res.status(404).json({message: "user not found"})
+        } else {
+            const result = await User.updateOne({_id: userId}, {...req.body})
+            console.log(result);
+            res.status(201).json({message: "changes done in db"})
+        }
+    } catch(error) {
+        res.status(502).json({message: `error ::: ${error}`})
+    }
+}
+
 module.exports = {
-    createUser, verifyUser
+    createUser, verifyUser, getUserData, changeUserProfile
 };
