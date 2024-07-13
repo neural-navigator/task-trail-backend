@@ -23,7 +23,7 @@ const getTask = async(req, res) => {
         const tasks = await Task.find(req.body.filter).select(req.body.selectFields).exec();
         // console.log(tasks);
         if(tasks.length==0) {
-            res.status(404).json({message: "No task found"})
+            res.status(404).json({message: "No task found", tasks: []})
         }
         res.status(200).json({tasks})
     } else {
@@ -31,7 +31,7 @@ const getTask = async(req, res) => {
         const tasks = await Task.find(newFilter).select(req.body.selectFields).exec();
         // console.log(tasks);
         if(tasks.length==0) {
-            res.status(404).json({message: "No task found"})
+            res.status(404).json({message: "No task found", tasks: []})
         }
         res.status(200).json({tasks})
     }
@@ -63,11 +63,12 @@ const saveTasks = async(req, res) => {
 const userTaskActivity = async(req, res) => {
     const userId = req.userId;
     try {
-        const result = SaveTask.find({category: req.body.taskType, userId: userId}).select('taskId');
+        const result = await SaveTask.find({category: req.body.taskType, userId: userId}).select('taskId');
         if(result.length===0) {
-            res.status(404).json("no collection found")
+            console.log(result);
+            res.status(404).json({message: "no collection found", tasks:[]})
         } else {
-            const tasks = Task.find({_id: {$in: result}});
+            const tasks = await Task.find({_id: {$in: result}});
             res.status(200).json({message: `${tasks.length} number of tasks found`, tasks})
         }
     } catch(error) {
